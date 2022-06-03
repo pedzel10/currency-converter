@@ -1,4 +1,4 @@
-import React, { StrictMode } from 'react'
+import React, { StrictMode, useEffect, useState } from 'react'
 import ReactDOM from 'react-dom/client'
 
 import API_KEYS from './api-keys'
@@ -12,6 +12,13 @@ import SettingsModal from './source/components/SettingsModal'
 import Footer from './source/components/Footer'
 
 const App = () => {
+    const [currencyList, setcurrencyList] = useState(null)
+
+    const [inputValue, setInputValue] = useState(1)
+    const [inputCurrency, setInputCurrency] = useState('USD')
+    const [resultValue, setResultValue] = useState(1)
+    const [resultCurrency, setResultCurrency] = useState('USD')
+
     let URL = ''
     const fetchCurrencyData = async (
         type = 'all',
@@ -33,23 +40,32 @@ const App = () => {
         else if (type === 'convert')
             URL = `https://api.apilayer.com/exchangerates_data/convert?to=${to}&from=${from}&amount=${amount}`
 
-        let data = {}
         await fetch(URL, requestOptions)
             .then(response => response.json())
-            .then(result => (data = result))
+            .then(result => setcurrencyList(result))
             .catch(error => console.log('error', error))
-
-        return data
     }
 
-    fetchCurrencyData('all')
+    useEffect(() => {
+        fetchCurrencyData('all')
+    }, [])
+
+    if (!currencyList) return <div>Loading...</div>
 
     return (
         <StrictMode>
             <main>
                 <CurrentPrice />
-                <Value />
-                <Value />
+                <Value
+                    data={currencyList}
+                    amount={inputValue}
+                    currency={inputCurrency}
+                />
+                <Value
+                    data={currencyList}
+                    amount={resultValue}
+                    currency={resultCurrency}
+                />
                 <CalculateButton />
                 <SwapButton />
                 <SettingsButton />
