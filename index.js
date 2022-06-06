@@ -19,9 +19,11 @@ const App = () => {
     const [resultValue, setResultValue] = useState(0)
     const [resultCurrency, setResultCurrency] = useState('PLN')
 
+    const [price, setPrice] = useState(1)
+
     const showResult = result => {
         const resultV = result.result
-        const price = result.info.rate
+        setPrice(result.info.rate)
 
         if (inputValue > 0) {
             setResultValue(resultV)
@@ -78,7 +80,13 @@ const App = () => {
     return (
         <StrictMode>
             <main>
-                <CurrentPrice />
+                <CurrentPrice
+                    inputValue={inputValue}
+                    inputCurrency={inputCurrency}
+                    resultValue={resultValue}
+                    resultCurrency={resultCurrency}
+                    price={price}
+                />
                 <Value
                     data={currencyList}
                     amount={inputValue}
