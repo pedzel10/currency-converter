@@ -114,7 +114,16 @@ const App = () => {
                     resultCurrency={resultCurrency}
                     fetchCurrencyData={fetchCurrencyData}
                 />
-                <SwapButton />
+                <SwapButton
+                    inputValue={inputValue}
+                    setInputValue={setInputValue}
+                    inputCurrency={inputCurrency}
+                    setInputCurrency={setInputCurrency}
+                    resultValue={resultValue}
+                    setResultValue={setResultValue}
+                    resultCurrency={resultCurrency}
+                    setResultCurrency={setResultCurrency}
+                />
                 <SettingsButton />
                 <SettingsModal />
                 <Footer />
