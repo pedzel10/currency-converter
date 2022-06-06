@@ -16,8 +16,19 @@ const App = () => {
 
     const [inputValue, setInputValue] = useState(1)
     const [inputCurrency, setInputCurrency] = useState('USD')
-    const [resultValue, setResultValue] = useState(1)
-    const [resultCurrency, setResultCurrency] = useState('USD')
+    const [resultValue, setResultValue] = useState(0)
+    const [resultCurrency, setResultCurrency] = useState('PLN')
+
+    const showResult = result => {
+        const resultV = result.result
+        const price = result.info.rate
+
+        if (inputValue > 0) {
+            setResultValue(resultV)
+        } else if (resultValue > 0) {
+            setInputValue(resultV)
+        }
+    }
 
     let URL = ''
     const fetchCurrencyData = async (
@@ -35,20 +46,32 @@ const App = () => {
             headers,
         }
 
-        if (type === 'all')
+        if (type === 'all') {
             URL = 'https://api.apilayer.com/exchangerates_data/symbols'
-        else if (type === 'convert')
+            await fetch(URL, requestOptions)
+                .then(response => response.json())
+                .then(result => setcurrencyList(result))
+                .catch(error => console.log('error', error))
+        } else if (type === 'convert') {
             URL = `https://api.apilayer.com/exchangerates_data/convert?to=${to}&from=${from}&amount=${amount}`
-
-        await fetch(URL, requestOptions)
-            .then(response => response.json())
-            .then(result => setcurrencyList(result))
-            .catch(error => console.log('error', error))
+            await fetch(URL, requestOptions)
+                .then(response => response.json())
+                .then(result => showResult(result))
+                .catch(error => console.log('error', error))
+        }
     }
 
     useEffect(() => {
         fetchCurrencyData('all')
     }, [])
+
+    // za pierwszym razem inputValue się nie zmienia
+    // useEffect(() => {
+    //     setResultValue(0)
+    // }, [inputValue])
+    // useEffect(() => {
+    //     setInputValue(0)
+    // }, [resultValue])
 
     if (!currencyList) return <div>Loading...</div>
 
@@ -60,13 +83,29 @@ const App = () => {
                     data={currencyList}
                     amount={inputValue}
                     currency={inputCurrency}
+                    setInputValue={setInputValue}
+                    setResultValue={setResultValue}
+                    setCurrency={setInputCurrency}
+                    type="input"
                 />
                 <Value
                     data={currencyList}
                     amount={resultValue}
                     currency={resultCurrency}
+                    setInputValue={setInputValue}
+                    setResultValue={setResultValue}
+                    setCurrency={setResultCurrency}
+                    type="result"
                 />
-                <CalculateButton />
+                <CalculateButton
+                    inputValue={inputValue}
+                    setInputValue={setInputValue}
+                    inputCurrency={inputCurrency}
+                    resultValue={resultValue}
+                    setResultValue={setResultValue}
+                    resultCurrency={resultCurrency}
+                    fetchCurrencyData={fetchCurrencyData}
+                />
                 <SwapButton />
                 <SettingsButton />
                 <SettingsModal />

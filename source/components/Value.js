@@ -1,13 +1,34 @@
 import React, { createRef } from 'react'
 
-const Value = ({ data, amount, currency }) => {
+const Value = ({
+    data,
+    amount,
+    currency,
+    setInputValue,
+    setResultValue,
+    setCurrency,
+    type,
+}) => {
     const object = data.symbols
     const list = Object.entries(object)
 
     const currencyButton = createRef()
-    const displayCurrency = e =>
-        (currencyButton.current.textContent =
-            e.target.closest('li').dataset.ticker)
+    const displayCurrency = e => {
+        setCurrency(e.target.closest('li').dataset.ticker)
+        // currencyButton.current.textContent =
+        //     e.target.closest('li').dataset.ticker
+    }
+
+    const displayValues = e => {
+        if (type === 'input') {
+            setInputValue(parseInt(e.target.value))
+            setResultValue(0)
+        }
+        if (type === 'result') {
+            setResultValue(parseInt(e.target.value))
+            setInputValue(0)
+        }
+    }
 
     return (
         <>
@@ -76,8 +97,9 @@ const Value = ({ data, amount, currency }) => {
             </div>
             <input
                 type="number"
-                defaultValue={amount}
+                value={amount}
                 placeholder="Enter amount"
+                onChange={displayValues}
             />
         </>
     )
