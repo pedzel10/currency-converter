@@ -1,12 +1,17 @@
-import React from 'react'
+import React, { createRef } from 'react'
 
-const Value = props => {
-    const object = props.data.symbols
+const Value = ({ data, amount, currency }) => {
+    const object = data.symbols
     const list = Object.entries(object)
+
+    const currencyButton = createRef()
+    const displayCurrency = e =>
+        (currencyButton.current.textContent =
+            e.target.closest('li').dataset.ticker)
 
     return (
         <>
-            <button>{props.currency}</button>
+            <button ref={currencyButton}>{currency}</button>
             <div>
                 <div>
                     <input type="search" placeholder="Enter currency" />
@@ -21,19 +26,35 @@ const Value = props => {
                     }}
                 >
                     <li>Main</li>
-                    <li>
+                    <li
+                        data-ticker={'PLN'}
+                        key={'PLN'}
+                        onClick={displayCurrency}
+                    >
                         <span>PLN </span>
                         <span>Polish Zloty</span>
                     </li>
-                    <li>
+                    <li
+                        data-ticker={'USD'}
+                        key={'USD'}
+                        onClick={displayCurrency}
+                    >
                         <span>USD </span>
                         <span>United States Dollar</span>
                     </li>
-                    <li>
+                    <li
+                        data-ticker={'EUR'}
+                        key={'EUR'}
+                        onClick={displayCurrency}
+                    >
                         <span>EUR </span>
                         <span>Euro</span>
                     </li>
-                    <li>
+                    <li
+                        data-ticker={'GPB'}
+                        key={'GPB'}
+                        onClick={displayCurrency}
+                    >
                         <span>GPB </span>
                         <span>British Pound Sterling</span>
                     </li>
@@ -41,7 +62,11 @@ const Value = props => {
                     <li>All</li>
                     {list.map(el => {
                         return (
-                            <li key={el[0]}>
+                            <li
+                                data-ticker={el[0]}
+                                key={el[0]}
+                                onClick={displayCurrency}
+                            >
                                 <span>{el[0]} </span>
                                 <span>{el[1]}</span>
                             </li>
@@ -51,7 +76,7 @@ const Value = props => {
             </div>
             <input
                 type="number"
-                defaultValue={props.amount}
+                defaultValue={amount}
                 placeholder="Enter amount"
             />
         </>
