@@ -11,11 +11,7 @@ import SettingsButton from './source/components/SettingsButton'
 import SettingsModal from './source/components/SettingsModal'
 import Footer from './source/components/Footer'
 
-export const SeparatorsContext = createContext({
-    decimal: ',',
-    thousands: '.',
-    formatNumber: function () {},
-})
+export const SeparatorsContext = createContext()
 
 const App = () => {
     const [separators, setSeparators] = useState({
@@ -33,8 +29,15 @@ const App = () => {
 
     const [price, setPrice] = useState(1)
 
-    const formatNumber = number => {
-        return number
+    const formatNumber = (number, thousands = '.') => {
+        const location = thousands === '.' ? 'de-DE' : 'en-US'
+        let result = number.toLocaleString(location, {
+            style: 'currency',
+            currency: 'EUR',
+        })
+        //getting rid of currency symbol
+        if (location === 'de-DE') return result.substring(0, result.length - 2)
+        if (location === 'en-US') return result.substring(1, result.length)
     }
 
     const showResult = result => {
@@ -153,7 +156,7 @@ const App = () => {
                         setResultCurrency={setResultCurrency}
                     />
                     <SettingsButton />
-                    <SettingsModal />
+                    <SettingsModal setSeparators={setSeparators} />
                 </SeparatorsContext.Provider>
                 <Footer />
             </main>
