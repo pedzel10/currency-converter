@@ -30,12 +30,37 @@ const App = () => {
     const [price, setPrice] = useState(1)
 
     const formatNumber = (number, thousands = '.') => {
-        const location = thousands === '.' ? 'de-DE' : 'en-US'
-        let result = number.toLocaleString(location, {
-            minimumFractionDigits: 2,
-        })
+        number = number.toString()
 
-        return result
+        const location = thousands === '.' ? 'de-DE' : 'en-US'
+        // console.log(number)
+
+        // thousands = .  -> 1.222,3
+        if (thousands === '.')
+            number = number.replace(/\./g, '').replace(',', '.')
+        // thousands = ,  -> 1,222.3
+        if (thousands === ',') number = number.replace(/\,/g, '')
+        // console.log('number - usuwanie i zamiana kropek: ', number)
+        // console.log('number: ', )
+
+        let resultInt = number
+        let resultString = new Intl.NumberFormat(location, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+        }).format(number)
+
+        // console.log(result)
+
+        // thousands = .  -> 1.222,3
+        // if (thousands === '.')
+        //     resultInt = resultString.replace('.', '').replace(',', '.')
+        // // thousands = ,  -> 1,222.3
+        // if (thousands === ',') resultInt = resultString.replace(',', '.')
+        // console.log(parseFloat(number), resultString)
+        return {
+            string: resultString,
+            int: parseFloat(resultInt),
+        }
     }
 
     const showResult = result => {
