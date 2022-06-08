@@ -20,7 +20,9 @@ const App = () => {
         formatNumber,
     })
 
-    const [currencyList, setcurrencyList] = useState(null)
+    const [allCurrencies, setAllCurrencies] = useState(null)
+    const [inputCurrencyList, setInputCurrencyList] = useState(null)
+    const [resultCurrencyList, setResultCurrencyList] = useState(null)
 
     const [inputValue, setInputValue] = useState(1)
     const [inputCurrency, setInputCurrency] = useState('USD')
@@ -94,7 +96,56 @@ const App = () => {
             URL = 'https://api.apilayer.com/exchangerates_data/symbols'
             await fetch(URL, requestOptions)
                 .then(response => response.json())
-                .then(result => setcurrencyList(result))
+                .then(result => {
+                    setAllCurrencies([
+                        ['EUR', 'Euro'],
+                        ['GBP', 'British Pound Sterling'],
+                        ['PLN', 'Polish Zloty'],
+                        ['USD', 'United States Dollar'],
+                        ...Object.entries(result.symbols).filter(el => {
+                            if (
+                                el[0] !== 'PLN' &&
+                                el[0] !== 'GBP' &&
+                                el[0] !== 'USD' &&
+                                el[0] !== 'EUR'
+                            )
+                                return true
+                            return false
+                        }),
+                    ])
+                    setInputCurrencyList([
+                        ['EUR', 'Euro'],
+                        ['GBP', 'British Pound Sterling'],
+                        ['PLN', 'Polish Zloty'],
+                        ['USD', 'United States Dollar'],
+                        ...Object.entries(result.symbols).filter(el => {
+                            if (
+                                el[0] !== 'PLN' &&
+                                el[0] !== 'GBP' &&
+                                el[0] !== 'USD' &&
+                                el[0] !== 'EUR'
+                            )
+                                return true
+                            return false
+                        }),
+                    ])
+                    setResultCurrencyList([
+                        ['EUR', 'Euro'],
+                        ['GBP', 'British Pound Sterling'],
+                        ['PLN', 'Polish Zloty'],
+                        ['USD', 'United States Dollar'],
+                        ...Object.entries(result.symbols).filter(el => {
+                            if (
+                                el[0] !== 'PLN' &&
+                                el[0] !== 'GBP' &&
+                                el[0] !== 'USD' &&
+                                el[0] !== 'EUR'
+                            )
+                                return true
+                            return false
+                        }),
+                    ])
+                })
                 .catch(error => console.log('error', error))
         } else if (type === 'convert') {
             URL = `https://api.apilayer.com/exchangerates_data/convert?to=${to}&from=${from}&amount=${amount}`
@@ -122,7 +173,7 @@ const App = () => {
     //     setInputValue(0)
     // }, [resultValue])
 
-    if (!currencyList) return <div>Loading...</div>
+    if (!allCurrencies) return <div>Loading...</div>
 
     return (
         <StrictMode>
@@ -142,21 +193,25 @@ const App = () => {
                         price={price}
                     />
                     <Value
-                        data={currencyList}
+                        data={allCurrencies}
                         amount={inputValue}
                         currency={inputCurrency}
                         setInputValue={setInputValue}
                         setResultValue={setResultValue}
                         setCurrency={setInputCurrency}
+                        currencyList={inputCurrencyList}
+                        setCurrencyList={setInputCurrencyList}
                         type="input"
                     />
                     <Value
-                        data={currencyList}
+                        data={allCurrencies}
                         amount={resultValue}
                         currency={resultCurrency}
                         setInputValue={setInputValue}
                         setResultValue={setResultValue}
                         setCurrency={setResultCurrency}
+                        currencyList={resultCurrencyList}
+                        setCurrencyList={setResultCurrencyList}
                         type="result"
                     />
                     <CalculateButton

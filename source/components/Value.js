@@ -9,21 +9,99 @@ const Value = ({
     setInputValue,
     setResultValue,
     setCurrency,
+    setCurrencyList,
+    currencyList,
     type,
 }) => {
     const format = useContext(SeparatorsContext).formatNumber
+    // console.log(currencyList, data)
 
-    const object = data.symbols
-    const list = Object.entries(object)
+    // listOfCurrencies = data     listToDisplay
+
+    let mainCurrencyExists = false
+    let notMainCurrencyExists = false
+
+    currencyList.some(el => {
+        if (
+            el[0] === 'PLN' ||
+            el[0] === 'EUR' ||
+            el[0] === 'GBP' ||
+            el[0] === 'USD'
+        ) {
+            mainCurrencyExists = true
+            return true
+        }
+    })
+
+    currencyList.some(el => {
+        if (
+            el[0] !== 'PLN' &&
+            el[0] !== 'EUR' &&
+            el[0] !== 'GBP' &&
+            el[0] !== 'USD'
+        ) {
+            notMainCurrencyExists = true
+            return true
+        }
+    })
+
+    const mainLabel = mainCurrencyExists ? ['Main'] : []
+    const allLabel = notMainCurrencyExists ? ['All'] : []
+    const mainCurrencies = currencyList.filter(
+        el =>
+            el[0] === 'PLN' ||
+            el[0] === 'EUR' ||
+            el[0] === 'GBP' ||
+            el[0] === 'USD'
+    )
+    const notMainCurrencies = currencyList.filter(
+        el =>
+            el[0] !== 'PLN' &&
+            el[0] !== 'EUR' &&
+            el[0] !== 'GBP' &&
+            el[0] !== 'USD'
+    )
+    // console.log(notMainCurrencies)
+
+    const listToDisplay = [
+        mainLabel,
+        ...mainCurrencies,
+        allLabel,
+        ...notMainCurrencies,
+    ].filter(el => el.length > 0)
+
+    const search = createRef()
+    // console.log(currencyList)
+
+    const changeCurrencyList = () => {
+        let newCurrencyList
+        if (search.current.value === '') {
+            newCurrencyList = data
+            setCurrencyList(newCurrencyList)
+            return
+        }
+
+        newCurrencyList = data.filter(el => {
+            const ticker = el[0].toLowerCase()
+            const name = el[1].toLowerCase()
+
+            const result =
+                ticker.search(search.current.value.toLocaleLowerCase()) > -1 ||
+                name.search(search.current.value.toLocaleLowerCase()) > -1
+
+            return result
+        })
+        setCurrencyList(newCurrencyList)
+    }
 
     const currencyButton = createRef()
     const displayCurrency = e => {
         setCurrency(e.target.closest('li').dataset.ticker)
-        // currencyButton.current.textContent =
-        //     e.target.closest('li').dataset.ticker
+        search.current.value = ''
+        setCurrencyList(data)
     }
 
-    const displayValues = e => {
+    const displayValues = () => {
         if (type === 'input') {
             // setInputValue(parseInt(e.target.value))
             setResultValue(0)
@@ -36,6 +114,9 @@ const Value = ({
 
     const { thousands } = useContext(SeparatorsContext)
     const formatValue = e => {
+        search.current.value = ''
+        setCurrencyList(data)
+
         if (type === 'input') {
             setInputValue(format(e.target.value, thousands).int)
             // setResultValue(0)
@@ -53,11 +134,12 @@ const Value = ({
     const resultInput = createRef()
 
     useEffect(() => {
+        changeCurrencyList()
         resultInput.current.value = format(
             amount.toString().replace(/\./g, ','),
             thousands
         ).string
-    }, [amount])
+    }, [amount, thousands])
 
     return (
         <>
@@ -76,46 +158,13 @@ const Value = ({
                         height: '200px',
                         overflow: 'hidden',
                         overflowY: 'scroll',
-                        width: '15%',
+                        width: '45%',
                         listStyle: 'none',
                     }}
                 >
-                    <li>Main</li>
-                    <li
-                        data-ticker={'PLN'}
-                        key={'PLN'}
-                        onClick={displayCurrency}
-                    >
-                        <span>PLN </span>
-                        <span>Polish Zloty</span>
-                    </li>
-                    <li
-                        data-ticker={'USD'}
-                        key={'USD'}
-                        onClick={displayCurrency}
-                    >
-                        <span>USD </span>
-                        <span>United States Dollar</span>
-                    </li>
-                    <li
-                        data-ticker={'EUR'}
-                        key={'EUR'}
-                        onClick={displayCurrency}
-                    >
-                        <span>EUR </span>
-                        <span>Euro</span>
-                    </li>
-                    <li
-                        data-ticker={'GPB'}
-                        key={'GPB'}
-                        onClick={displayCurrency}
-                    >
-                        <span>GPB </span>
-                        <span>British Pound Sterling</span>
-                    </li>
-                    <li>------------------</li>
-                    <li>All</li>
-                    {list.map(el => {
+                    {listToDisplay.map(el => {
+                        if (el[0] == 'Main' || el[0] == 'All')
+                            return <li key={el[0]}>{el[0]}</li>
                         return (
                             <li
                                 data-ticker={el[0]}
