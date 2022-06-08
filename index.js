@@ -14,6 +14,8 @@ import Footer from './source/components/Footer'
 export const SeparatorsContext = createContext()
 
 const App = () => {
+    // User has the ability to change separation characters
+    // e.g. 1,222.33 or 1.222,33
     const [separators, setSeparators] = useState({
         decimal: ',',
         thousands: '.',
@@ -29,6 +31,7 @@ const App = () => {
     const [resultValue, setResultValue] = useState(0)
     const [resultCurrency, setResultCurrency] = useState('PLN')
 
+    // Price rate  e.g. 1 USD = 4,26 PLN
     const [price, setPrice] = useState(1)
 
     const formatNumber = (number, thousands = '.') => {
@@ -62,6 +65,10 @@ const App = () => {
     }
 
     let URL = ''
+
+    // Fetches data form https://exchangeratesapi.io/
+    // type = 'all' returns all available currencies
+    // type = 'convert' returns result of conversion
     const fetchCurrencyData = async (
         type = 'all',
         from = 'PLN',
@@ -98,6 +105,7 @@ const App = () => {
                             return false
                         }),
                     ]
+                    // setting state on initial render
                     setAllCurrencies(allCurrencies)
                     setInputCurrencyList(allCurrencies)
                     setResultCurrencyList(allCurrencies)

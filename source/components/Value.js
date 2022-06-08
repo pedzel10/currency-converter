@@ -15,6 +15,12 @@ const Value = ({
 }) => {
     const format = useContext(SeparatorsContext).formatNumber
 
+    // currency list is divided into 2 parts
+    // - Main -> EUR, GBP, PLN, USD
+    // - Other
+    // before each list starts there's 'Main' or 'All' label
+
+    // if there're no currencies in on of the 2 part, the whole parts, so as the label, is not displayed
     let mainCurrencyExists = false
     let notMainCurrencyExists = false
 
@@ -68,6 +74,7 @@ const Value = ({
 
     const search = createRef()
 
+    // sets State after user typed in the search input
     const changeCurrencyList = () => {
         let newCurrencyList
         if (search.current.value === '') {
@@ -96,6 +103,7 @@ const Value = ({
         setCurrencyList(data)
     }
 
+    // when user is typying in one of the inputs, automatically sets value of the other input to 0,00
     const displayValues = () => {
         if (type === 'input') setResultValue(0)
 
@@ -103,6 +111,8 @@ const Value = ({
     }
 
     const { thousands } = useContext(SeparatorsContext)
+
+    // Formats values according to separation characters set by the user
     const formatValue = e => {
         search.current.value = ''
         setCurrencyList(data)
@@ -122,6 +132,9 @@ const Value = ({
 
     useEffect(() => {
         changeCurrencyList()
+
+        // Formats value after changes in state
+        // function 'formatValue()' fires only on input blur
         resultInput.current.value = format(
             amount.toString().replace(/\./g, ','),
             thousands
