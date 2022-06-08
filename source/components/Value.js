@@ -1,4 +1,6 @@
-import React, { createRef } from 'react'
+import React, { createRef, useContext, useEffect } from 'react'
+
+import { SeparatorsContext } from '/index.js'
 
 const Value = ({
     data,
@@ -9,6 +11,8 @@ const Value = ({
     setCurrency,
     type,
 }) => {
+    const format = useContext(SeparatorsContext).formatNumber
+
     const object = data.symbols
     const list = Object.entries(object)
 
@@ -21,21 +25,51 @@ const Value = ({
 
     const displayValues = e => {
         if (type === 'input') {
-            setInputValue(parseInt(e.target.value))
+            // setInputValue(parseInt(e.target.value))
             setResultValue(0)
         }
         if (type === 'result') {
-            setResultValue(parseInt(e.target.value))
+            // setResultValue(parseInt(e.target.value))
             setInputValue(0)
         }
     }
+
+    const { thousands } = useContext(SeparatorsContext)
+    const formatValue = e => {
+        if (type === 'input') {
+            setInputValue(format(e.target.value, thousands).int)
+            // setResultValue(0)
+        } else if (type === 'result') {
+            setResultValue(format(e.target.value, thousands).int)
+            // setInputValue(0)
+        }
+
+        e.target.value = format(
+            amount.toString().replace(/\./g, ','),
+            thousands
+        ).string
+    }
+
+    const resultInput = createRef()
+
+    useEffect(() => {
+        resultInput.current.value = format(
+            amount.toString().replace(/\./g, ','),
+            thousands
+        ).string
+    }, [amount])
 
     return (
         <>
             <button ref={currencyButton}>{currency}</button>
             <div>
                 <div>
-                    <input type="search" placeholder="Enter currency" />
+                    <input
+                        type="search"
+                        placeholder="Enter currency"
+                        onChange={changeCurrencyList}
+                        ref={search}
+                    />
                 </div>
                 <ul
                     style={{
@@ -96,10 +130,11 @@ const Value = ({
                 </ul>
             </div>
             <input
-                type="number"
-                value={amount}
+                type="text"
+                ref={resultInput}
                 placeholder="Enter amount"
                 onChange={displayValues}
+                onBlur={formatValue}
             />
         </>
     )
