@@ -33,17 +33,13 @@ const App = () => {
 
     const formatNumber = (number, thousands = '.') => {
         number = number.toString()
-
+        number = number.replace('.', ',')
         const location = thousands === '.' ? 'de-DE' : 'en-US'
-        // console.log(number)
 
-        // thousands = .  -> 1.222,3
         if (thousands === '.')
             number = number.replace(/\./g, '').replace(',', '.')
-        // thousands = ,  -> 1,222.3
+
         if (thousands === ',') number = number.replace(/\,/g, '')
-        // console.log('number - usuwanie i zamiana kropek: ', number)
-        // console.log('number: ', )
 
         let resultInt = number
         let resultString = new Intl.NumberFormat(location, {
@@ -51,14 +47,6 @@ const App = () => {
             maximumFractionDigits: 2,
         }).format(number)
 
-        // console.log(result)
-
-        // thousands = .  -> 1.222,3
-        // if (thousands === '.')
-        //     resultInt = resultString.replace('.', '').replace(',', '.')
-        // // thousands = ,  -> 1,222.3
-        // if (thousands === ',') resultInt = resultString.replace(',', '.')
-        // console.log(parseFloat(number), resultString)
         return {
             string: resultString,
             int: parseFloat(resultInt),
@@ -69,11 +57,8 @@ const App = () => {
         const resultV = result.result
         setPrice(result.info.rate)
 
-        if (inputValue > 0) {
-            setResultValue(resultV)
-        } else if (resultValue > 0) {
-            setInputValue(resultV)
-        }
+        if (inputValue > 0) setResultValue(resultV)
+        else if (resultValue > 0) setInputValue(resultV)
     }
 
     let URL = ''
@@ -97,7 +82,7 @@ const App = () => {
             await fetch(URL, requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    setAllCurrencies([
+                    const allCurrencies = [
                         ['EUR', 'Euro'],
                         ['GBP', 'British Pound Sterling'],
                         ['PLN', 'Polish Zloty'],
@@ -112,39 +97,10 @@ const App = () => {
                                 return true
                             return false
                         }),
-                    ])
-                    setInputCurrencyList([
-                        ['EUR', 'Euro'],
-                        ['GBP', 'British Pound Sterling'],
-                        ['PLN', 'Polish Zloty'],
-                        ['USD', 'United States Dollar'],
-                        ...Object.entries(result.symbols).filter(el => {
-                            if (
-                                el[0] !== 'PLN' &&
-                                el[0] !== 'GBP' &&
-                                el[0] !== 'USD' &&
-                                el[0] !== 'EUR'
-                            )
-                                return true
-                            return false
-                        }),
-                    ])
-                    setResultCurrencyList([
-                        ['EUR', 'Euro'],
-                        ['GBP', 'British Pound Sterling'],
-                        ['PLN', 'Polish Zloty'],
-                        ['USD', 'United States Dollar'],
-                        ...Object.entries(result.symbols).filter(el => {
-                            if (
-                                el[0] !== 'PLN' &&
-                                el[0] !== 'GBP' &&
-                                el[0] !== 'USD' &&
-                                el[0] !== 'EUR'
-                            )
-                                return true
-                            return false
-                        }),
-                    ])
+                    ]
+                    setAllCurrencies(allCurrencies)
+                    setInputCurrencyList(allCurrencies)
+                    setResultCurrencyList(allCurrencies)
                 })
                 .catch(error => console.log('error', error))
         } else if (type === 'convert') {
@@ -165,14 +121,6 @@ const App = () => {
         })
     }, [])
 
-    // za pierwszym razem inputValue się nie zmienia
-    // useEffect(() => {
-    //     setResultValue(0)
-    // }, [inputValue])
-    // useEffect(() => {
-    //     setInputValue(0)
-    // }, [resultValue])
-
     if (!allCurrencies) return <div>Loading...</div>
 
     return (
@@ -186,9 +134,7 @@ const App = () => {
                     }}
                 >
                     <CurrentPrice
-                        inputValue={inputValue}
                         inputCurrency={inputCurrency}
-                        resultValue={resultValue}
                         resultCurrency={resultCurrency}
                         price={price}
                     />
@@ -216,10 +162,8 @@ const App = () => {
                     />
                     <CalculateButton
                         inputValue={inputValue}
-                        setInputValue={setInputValue}
                         inputCurrency={inputCurrency}
                         resultValue={resultValue}
-                        setResultValue={setResultValue}
                         resultCurrency={resultCurrency}
                         fetchCurrencyData={fetchCurrencyData}
                     />

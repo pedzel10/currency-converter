@@ -2,14 +2,12 @@ import React from 'react'
 
 const CalculateButton = ({
     inputValue,
-    setInputValue,
     inputCurrency,
-    setResultValue,
     resultValue,
     resultCurrency,
     fetchCurrencyData,
 }) => {
-    const setState = () => {
+    const calculate = () => {
         if (inputValue > 0) {
             fetchCurrencyData(
                 'convert',
@@ -27,7 +25,7 @@ const CalculateButton = ({
         }
     }
 
-    return <button onClick={setState}>Przelicz</button>
+    return <button onClick={calculate}>Przelicz</button>
 }
 
-export default CalculateButton
+export default React.memo(CalculateButton)

@@ -14,9 +14,6 @@ const Value = ({
     type,
 }) => {
     const format = useContext(SeparatorsContext).formatNumber
-    // console.log(currencyList, data)
-
-    // listOfCurrencies = data     listToDisplay
 
     let mainCurrencyExists = false
     let notMainCurrencyExists = false
@@ -61,7 +58,6 @@ const Value = ({
             el[0] !== 'GBP' &&
             el[0] !== 'USD'
     )
-    // console.log(notMainCurrencies)
 
     const listToDisplay = [
         mainLabel,
@@ -71,7 +67,6 @@ const Value = ({
     ].filter(el => el.length > 0)
 
     const search = createRef()
-    // console.log(currencyList)
 
     const changeCurrencyList = () => {
         let newCurrencyList
@@ -102,14 +97,9 @@ const Value = ({
     }
 
     const displayValues = () => {
-        if (type === 'input') {
-            // setInputValue(parseInt(e.target.value))
-            setResultValue(0)
-        }
-        if (type === 'result') {
-            // setResultValue(parseInt(e.target.value))
-            setInputValue(0)
-        }
+        if (type === 'input') setResultValue(0)
+
+        if (type === 'result') setInputValue(0)
     }
 
     const { thousands } = useContext(SeparatorsContext)
@@ -117,13 +107,10 @@ const Value = ({
         search.current.value = ''
         setCurrencyList(data)
 
-        if (type === 'input') {
+        if (type === 'input')
             setInputValue(format(e.target.value, thousands).int)
-            // setResultValue(0)
-        } else if (type === 'result') {
+        else if (type === 'result')
             setResultValue(format(e.target.value, thousands).int)
-            // setInputValue(0)
-        }
 
         e.target.value = format(
             amount.toString().replace(/\./g, ','),
@@ -189,4 +176,4 @@ const Value = ({
     )
 }
 
-export default Value
+export default React.memo(Value)

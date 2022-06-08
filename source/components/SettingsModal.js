@@ -1,11 +1,6 @@
-import React, { useContext } from 'react'
-
-import { SeparatorsContext } from '/index.js'
+import React from 'react'
 
 const SettingsModal = ({ setSeparators }) => {
-    // const { decimal, thousands, formatNumber } = useContext(SeparatorsContext)
-    // console.log(decimal, thousands, formatNumber)
-
     const setDotAsDecimalSeparator = () => {
         setSeparators(prevState => {
             return {
@@ -43,4 +38,4 @@ const SettingsModal = ({ setSeparators }) => {
     )
 }
 
-export default SettingsModal
+export default React.memo(SettingsModal)

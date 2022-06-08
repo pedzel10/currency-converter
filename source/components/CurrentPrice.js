@@ -2,18 +2,12 @@ import React, { useContext, useEffect } from 'react'
 
 import { SeparatorsContext } from '/index.js'
 
-const CurrentPrice = ({
-    inputValue,
-    inputCurrency,
-    resultValue,
-    resultCurrency,
-    price,
-}) => {
+const CurrentPrice = ({ inputCurrency, resultCurrency, price }) => {
     const { thousands, formatNumber } = useContext(SeparatorsContext)
     let price2 = 1 / price
 
     useEffect(() => {
-        console.log('zabierz klasę')
+        // toggle class
     }, [inputCurrency, resultCurrency])
 
     return (
@@ -42,4 +36,4 @@ const CurrentPrice = ({
     )
 }
 
-export default CurrentPrice
+export default React.memo(CurrentPrice)
