@@ -32,12 +32,10 @@ const App = () => {
     const formatNumber = (number, thousands = '.') => {
         const location = thousands === '.' ? 'de-DE' : 'en-US'
         let result = number.toLocaleString(location, {
-            style: 'currency',
-            currency: 'EUR',
+            minimumFractionDigits: 2,
         })
-        //getting rid of currency symbol
-        if (location === 'de-DE') return result.substring(0, result.length - 2)
-        if (location === 'en-US') return result.substring(1, result.length)
+
+        return result
     }
 
     const showResult = result => {
