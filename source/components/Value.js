@@ -142,7 +142,7 @@ const Value = ({
     }, [amount, thousands])
 
     return (
-        <>
+        <div className="main__value">
             <button ref={currencyButton}>{currency}</button>
             <div>
                 <div>
@@ -185,7 +185,7 @@ const Value = ({
                 onChange={displayValues}
                 onBlur={formatValue}
             />
-        </>
+        </div>
     )
 }
 

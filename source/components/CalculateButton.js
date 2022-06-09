@@ -25,7 +25,11 @@ const CalculateButton = ({
         }
     }
 
-    return <button onClick={calculate}>Przelicz</button>
+    return (
+        <button onClick={calculate} className="main__calculate-button">
+            Przelicz
+        </button>
+    )
 }
 
 export default React.memo(CalculateButton)

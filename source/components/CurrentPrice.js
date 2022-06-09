@@ -11,7 +11,7 @@ const CurrentPrice = ({ inputCurrency, resultCurrency, price }) => {
     }, [inputCurrency, resultCurrency])
 
     return (
-        <>
+        <div className="main__current-price">
             <p>
                 1 {inputCurrency} ={' '}
                 {
@@ -32,7 +32,7 @@ const CurrentPrice = ({ inputCurrency, resultCurrency, price }) => {
                 }{' '}
                 {inputCurrency}
             </p>
-        </>
+        </div>
     )
 }
 

@@ -5,7 +5,7 @@ import { faGear } from '@fortawesome/free-solid-svg-icons'
 
 const SettingsButton = () => {
     return (
-        <button>
+        <button className="main__settings-button">
             <FontAwesomeIcon icon={faGear} />
         </button>
     )

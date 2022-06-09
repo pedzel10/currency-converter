@@ -7,7 +7,7 @@ const Footer = () => {
     const copy = String.fromCodePoint(169)
 
     return (
-        <footer>
+        <footer className="main__footer">
             <span> {copy} </span> Stanisław Szarapka
             <a href="https://github.com/pedzel10">
                 <FontAwesomeIcon icon={faGithub} />

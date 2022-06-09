@@ -23,7 +23,7 @@ const SettingsModal = ({ setSeparators }) => {
     }
 
     return (
-        <>
+        <div className="main__settings-modal">
             <div>
                 <label>Separator dziesiętny</label>
                 <button onClick={setDotAsDecimalSeparator}>.</button>
@@ -34,7 +34,7 @@ const SettingsModal = ({ setSeparators }) => {
                 <button onClick={setComaAsDecimalSeparator}>.</button>
                 <button onClick={setDotAsDecimalSeparator}>,</button>
             </div>
-        </>
+        </div>
     )
 }
 

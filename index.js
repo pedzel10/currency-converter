@@ -133,7 +133,7 @@ const App = () => {
 
     return (
         <StrictMode>
-            <main>
+            <main className="main">
                 <SeparatorsContext.Provider
                     value={{
                         decimal: separators.decimal,
