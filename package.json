@@ -19,7 +19,8 @@
   },
   "homepage": "https://github.com/pedzel10/currency-converter#readme",
   "devDependencies": {
-    "parcel-bundler": "^1.12.5"
+    "parcel-bundler": "^1.12.5",
+    "sass": "^1.52.3"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",

@@ -3,10 +3,13 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGear } from '@fortawesome/free-solid-svg-icons'
 
-const SettingsButton = () => {
+const SettingsButton = ({ setShowSettingsModal }) => {
     return (
         <button className="main__settings-button">
-            <FontAwesomeIcon icon={faGear} />
+            <FontAwesomeIcon
+                icon={faGear}
+                onClick={() => setShowSettingsModal(true)}
+            />
         </button>
     )
 }

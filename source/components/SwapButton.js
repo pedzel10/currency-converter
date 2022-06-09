@@ -32,7 +32,7 @@ const SwapButton = ({
     }
 
     return (
-        <button onClick={swapCurrencies} className="main__calculate-button">
+        <button onClick={swapCurrencies} className="main__swap-button">
             <FontAwesomeIcon icon={faArrowDownLong} />
             <FontAwesomeIcon icon={faArrowUpLong} />
         </button>

@@ -1,0 +1,28 @@
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgb(27, 27, 30);
+    width: 100%;
+    height: 100vh;
+
+    .result-container {
+        position: relative;
+        width: 80%;
+        height: 12%;
+        // background-color: #ddd;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .main__swap-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: -8%;
+            border: none;
+            background-color: transparent;
+            color: rgb(255, 255, 0);
+        }
+    }
+}

@@ -1,0 +1,13 @@
+.main__footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    color: rgba(255, 255, 0, 0.891);
+    margin-bottom: 2%;
+    .footer__gh-icon {
+        margin-left: 1%;
+        color: inherit;
+    }
+}

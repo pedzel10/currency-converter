@@ -9,7 +9,7 @@ const Footer = () => {
     return (
         <footer className="main__footer">
             <span> {copy} </span> Stanisław Szarapka
-            <a href="https://github.com/pedzel10">
+            <a href="https://github.com/pedzel10" className="footer__gh-icon">
                 <FontAwesomeIcon icon={faGithub} />
             </a>
         </footer>

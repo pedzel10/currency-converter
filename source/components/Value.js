@@ -1,5 +1,8 @@
 import React, { createRef, useContext, useEffect } from 'react'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
+
 import { SeparatorsContext } from '/index.js'
 
 const Value = ({
@@ -11,6 +14,8 @@ const Value = ({
     setCurrency,
     setCurrencyList,
     currencyList,
+    showCurrencyList,
+    setShowCurrencyList,
     type,
 }) => {
     const format = useContext(SeparatorsContext).formatNumber
@@ -101,6 +106,9 @@ const Value = ({
         setCurrency(e.target.closest('li').dataset.ticker)
         search.current.value = ''
         setCurrencyList(data)
+        currencyListElement.current.classList.remove(
+            'value__currency-list--active'
+        )
     }
 
     // when user is typying in one of the inputs, automatically sets value of the other input to 0,00
@@ -128,9 +136,25 @@ const Value = ({
         ).string
     }
 
+    const currencyListElement = createRef()
+    const showOptions = () =>
+        currencyListElement.current.classList.toggle(
+            'value__currency-list--active'
+        )
+
     const resultInput = createRef()
 
     useEffect(() => {
+        console.log(showCurrencyList)
+
+        if (showCurrencyList)
+            currencyListElement.current.classList.add(
+                'value__currency-list--active'
+            )
+        if (showCurrencyList === false)
+            currencyListElement.current.classList.remove(
+                'value__currency-list--active'
+            )
         changeCurrencyList()
 
         // Formats value after changes in state
@@ -139,40 +163,53 @@ const Value = ({
             amount.toString().replace(/\./g, ','),
             thousands
         ).string
-    }, [amount, thousands])
+    }, [amount, thousands, showCurrencyList])
 
     return (
-        <div className="main__value">
-            <button ref={currencyButton}>{currency}</button>
-            <div>
+        <div className="main__value value">
+            <button
+                ref={currencyButton}
+                onClick={showOptions}
+                className="value__choose-currency-button"
+            >
+                <span className="value__currency-symbol">{currency}</span>
+                <FontAwesomeIcon icon={faAngleDown} />
+            </button>
+            <div
+                className="value__currency-list currency-list"
+                ref={currencyListElement}
+            >
                 <div>
                     <input
                         type="search"
                         placeholder="Enter currency"
                         onChange={changeCurrencyList}
                         ref={search}
+                        className="currency-list__search"
                     />
                 </div>
-                <ul
-                    style={{
-                        height: '200px',
-                        overflow: 'hidden',
-                        overflowY: 'scroll',
-                        width: '45%',
-                        listStyle: 'none',
-                    }}
-                >
+                <ul style={{}} className="currency-list__ul">
                     {listToDisplay.map(el => {
                         if (el[0] == 'Main' || el[0] == 'All')
-                            return <li key={el[0]}>{el[0]}</li>
+                            return (
+                                <li
+                                    className={`${el[0].toLowerCase()}-label`}
+                                    key={el[0]}
+                                >
+                                    {el[0]}
+                                </li>
+                            )
                         return (
                             <li
                                 data-ticker={el[0]}
                                 key={el[0]}
                                 onClick={displayCurrency}
+                                className="currency-list__element element"
                             >
-                                <span>{el[0]} </span>
-                                <span>{el[1]}</span>
+                                <span className="element__ticker">
+                                    {el[0]}{' '}
+                                </span>
+                                <span className="element__name">{el[1]}</span>
                             </li>
                         )
                     })}
@@ -184,6 +221,7 @@ const Value = ({
                 placeholder="Enter amount"
                 onChange={displayValues}
                 onBlur={formatValue}
+                className="value__input"
             />
         </div>
     )

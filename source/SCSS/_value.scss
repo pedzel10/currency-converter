@@ -1,0 +1,76 @@
+.main__value {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    .value__choose-currency-button {
+        width: 25%;
+        border: 1px solid rgb(255, 255, 0);
+        padding: 2%;
+        border-radius: 2px;
+        background-color: rgb(27, 27, 30);
+        font-size: 16px;
+        color: rgb(255, 255, 0);
+        .value__currency-symbol {
+            // background-color: red;
+            padding-right: 10px;
+        }
+    }
+    .value__currency-list {
+        position: absolute;
+        background-color: rgb(27, 27, 30);
+        border: 1px solid rgb(255, 255, 0);
+        border-radius: 2px;
+        color: rgb(255, 255, 0);
+        display: none;
+        top: 100%;
+        left: 0;
+        z-index: 1;
+        .currency-list__search {
+            background-color: rgb(27, 27, 30);
+            border-bottom: 1px solid rgb(255, 255, 0);
+            border-radius: 2px;
+            padding: 5% 5px;
+            color: rgb(255, 255, 0);
+            outline: none;
+        }
+        .currency-list__ul {
+            height: 200px;
+            overflow: hidden;
+            overflow-y: scroll;
+            width: 100%;
+            list-style: none;
+        }
+        .all-label {
+            border-top: 1px solid rgb(255, 255, 0);
+            margin: 5% 0 0 0;
+        }
+        .currency-list__element,
+        .all-label,
+        .main-label {
+            padding: 3% 5%;
+        }
+        .currency-list__element {
+            display: flex;
+            flex-direction: column;
+            .element__ticker {
+                font-size: 18px;
+            }
+            .element__name {
+                font-size: 10px;
+            }
+        }
+    }
+
+    .value__currency-list.value__currency-list--active {
+        display: block;
+    }
+    .value__input {
+        border: 1px solid rgb(255, 255, 0);
+        border-radius: 2px;
+        background-color: rgb(27, 27, 30);
+        padding: 2%;
+        font-size: 18px;
+        width: 73%;
+        color: rgb(255, 255, 0);
+    }
+}

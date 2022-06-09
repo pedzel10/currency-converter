@@ -31,6 +31,9 @@ const App = () => {
     const [resultValue, setResultValue] = useState(0)
     const [resultCurrency, setResultCurrency] = useState('PLN')
 
+    const [showSettingsModal, setShowSettingsModal] = useState(false)
+    const [showCurrencyList, setShowCurrencyList] = useState(false)
+
     // Price rate  e.g. 1 USD = 4,26 PLN
     const [price, setPrice] = useState(1)
 
@@ -120,6 +123,18 @@ const App = () => {
         }
     }
 
+    const closeModals = e => {
+        if (
+            e.target.closest('.main__settings-modal') ||
+            e.target.closest('.main__settings-button') ||
+            e.target.closest('.value__currency-list')
+        )
+            return
+        console.log(e.target)
+        setShowSettingsModal(false)
+        setShowCurrencyList(false)
+    }
+
     useEffect(() => {
         fetchCurrencyData('all')
         setSeparators({
@@ -133,7 +148,7 @@ const App = () => {
 
     return (
         <StrictMode>
-            <main className="main">
+            <main className="main" onClick={closeModals}>
                 <SeparatorsContext.Provider
                     value={{
                         decimal: separators.decimal,
@@ -141,33 +156,49 @@ const App = () => {
                         formatNumber: separators.formatNumber,
                     }}
                 >
-                    <CurrentPrice
-                        inputCurrency={inputCurrency}
-                        resultCurrency={resultCurrency}
-                        price={price}
-                    />
-                    <Value
-                        data={allCurrencies}
-                        amount={inputValue}
-                        currency={inputCurrency}
-                        setInputValue={setInputValue}
-                        setResultValue={setResultValue}
-                        setCurrency={setInputCurrency}
-                        currencyList={inputCurrencyList}
-                        setCurrencyList={setInputCurrencyList}
-                        type="input"
-                    />
-                    <Value
-                        data={allCurrencies}
-                        amount={resultValue}
-                        currency={resultCurrency}
-                        setInputValue={setInputValue}
-                        setResultValue={setResultValue}
-                        setCurrency={setResultCurrency}
-                        currencyList={resultCurrencyList}
-                        setCurrencyList={setResultCurrencyList}
-                        type="result"
-                    />
+                    <div className="result-container">
+                        <CurrentPrice
+                            inputCurrency={inputCurrency}
+                            resultCurrency={resultCurrency}
+                            price={price}
+                        />
+                        <Value
+                            data={allCurrencies}
+                            amount={inputValue}
+                            currency={inputCurrency}
+                            setInputValue={setInputValue}
+                            setResultValue={setResultValue}
+                            setCurrency={setInputCurrency}
+                            currencyList={inputCurrencyList}
+                            setCurrencyList={setInputCurrencyList}
+                            showCurrencyList={showCurrencyList}
+                            setShowCurrencyList={setShowCurrencyList}
+                            type="input"
+                        />
+                        <Value
+                            data={allCurrencies}
+                            amount={resultValue}
+                            currency={resultCurrency}
+                            setInputValue={setInputValue}
+                            setResultValue={setResultValue}
+                            setCurrency={setResultCurrency}
+                            currencyList={resultCurrencyList}
+                            setCurrencyList={setResultCurrencyList}
+                            showCurrencyList={showCurrencyList}
+                            setShowCurrencyList={setShowCurrencyList}
+                            type="result"
+                        />
+                        <SwapButton
+                            inputValue={inputValue}
+                            setInputValue={setInputValue}
+                            inputCurrency={inputCurrency}
+                            setInputCurrency={setInputCurrency}
+                            resultValue={resultValue}
+                            setResultValue={setResultValue}
+                            resultCurrency={resultCurrency}
+                            setResultCurrency={setResultCurrency}
+                        />
+                    </div>
                     <CalculateButton
                         inputValue={inputValue}
                         inputCurrency={inputCurrency}
@@ -175,18 +206,14 @@ const App = () => {
                         resultCurrency={resultCurrency}
                         fetchCurrencyData={fetchCurrencyData}
                     />
-                    <SwapButton
-                        inputValue={inputValue}
-                        setInputValue={setInputValue}
-                        inputCurrency={inputCurrency}
-                        setInputCurrency={setInputCurrency}
-                        resultValue={resultValue}
-                        setResultValue={setResultValue}
-                        resultCurrency={resultCurrency}
-                        setResultCurrency={setResultCurrency}
+
+                    <SettingsButton
+                        setShowSettingsModal={setShowSettingsModal}
                     />
-                    <SettingsButton />
-                    <SettingsModal setSeparators={setSeparators} />
+                    <SettingsModal
+                        setSeparators={setSeparators}
+                        showSettingsModal={showSettingsModal}
+                    />
                 </SeparatorsContext.Provider>
                 <Footer />
             </main>
