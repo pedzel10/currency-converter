@@ -6,6 +6,7 @@ const CalculateButton = ({
     resultValue,
     resultCurrency,
     fetchCurrencyData,
+    setShowCurrentPrice,
 }) => {
     const calculate = () => {
         if (inputValue > 0) {
@@ -23,6 +24,7 @@ const CalculateButton = ({
                 resultValue
             )
         }
+        setShowCurrentPrice(true)
     }
 
     return (

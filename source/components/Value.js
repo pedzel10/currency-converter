@@ -14,6 +14,7 @@ const Value = ({
     setCurrency,
     setCurrencyList,
     currencyList,
+    setShowCurrentPrice,
     type,
 }) => {
     const format = useContext(SeparatorsContext).formatNumber
@@ -107,6 +108,8 @@ const Value = ({
         currencyListElement.current.classList.remove(
             'value__currency-list--active'
         )
+
+        setShowCurrentPrice(false)
     }
 
     // when user is typying in one of the inputs, automatically sets value of the other input to 0,00

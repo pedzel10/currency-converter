@@ -32,6 +32,7 @@ const App = () => {
     const [resultCurrency, setResultCurrency] = useState('PLN')
 
     const [showSettingsModal, setShowSettingsModal] = useState(false)
+    const [showCurrentPrice, setShowCurrentPrice] = useState(false)
 
     // Price rate  e.g. 1 USD = 4,26 PLN
     const [price, setPrice] = useState(1)
@@ -160,6 +161,8 @@ const App = () => {
                             inputCurrency={inputCurrency}
                             resultCurrency={resultCurrency}
                             price={price}
+                            showCurrentPrice={showCurrentPrice}
+                            setShowCurrentPrice={setShowCurrentPrice}
                         />
                         <Value
                             data={allCurrencies}
@@ -170,6 +173,7 @@ const App = () => {
                             setCurrency={setInputCurrency}
                             currencyList={inputCurrencyList}
                             setCurrencyList={setInputCurrencyList}
+                            setShowCurrentPrice={setShowCurrentPrice}
                             type="input"
                         />
                         <Value
@@ -181,6 +185,7 @@ const App = () => {
                             setCurrency={setResultCurrency}
                             currencyList={resultCurrencyList}
                             setCurrencyList={setResultCurrencyList}
+                            setShowCurrentPrice={setShowCurrentPrice}
                             type="result"
                         />
                         <SwapButton
@@ -200,6 +205,7 @@ const App = () => {
                         resultValue={resultValue}
                         resultCurrency={resultCurrency}
                         fetchCurrencyData={fetchCurrencyData}
+                        setShowCurrentPrice={setShowCurrentPrice}
                     />
                     <SettingsButton
                         setShowSettingsModal={setShowSettingsModal}

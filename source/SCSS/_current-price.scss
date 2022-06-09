@@ -1,3 +1,6 @@
 .main__current-price {
     display: none;
 }
+.main__current-price.main__current-price--active {
+    display: block;
+}
