@@ -32,14 +32,15 @@ const App = () => {
     const [resultCurrency, setResultCurrency] = useState('PLN')
 
     const [showSettingsModal, setShowSettingsModal] = useState(false)
-    const [showCurrencyList, setShowCurrencyList] = useState(false)
 
     // Price rate  e.g. 1 USD = 4,26 PLN
     const [price, setPrice] = useState(1)
 
-    const formatNumber = (number, thousands = '.') => {
+    const formatNumber = (number, thousands) => {
         number = number.toString()
-        number = number.replace('.', ',')
+        if (thousands === '.') number = number.replace('.', ',')
+        if (thousands === ',') number = number.replace(',', '.')
+
         const location = thousands === '.' ? 'de-DE' : 'en-US'
 
         if (thousands === '.')
@@ -130,9 +131,7 @@ const App = () => {
             e.target.closest('.value__currency-list')
         )
             return
-        console.log(e.target)
         setShowSettingsModal(false)
-        setShowCurrencyList(false)
     }
 
     useEffect(() => {
@@ -171,8 +170,6 @@ const App = () => {
                             setCurrency={setInputCurrency}
                             currencyList={inputCurrencyList}
                             setCurrencyList={setInputCurrencyList}
-                            showCurrencyList={showCurrencyList}
-                            setShowCurrencyList={setShowCurrencyList}
                             type="input"
                         />
                         <Value
@@ -184,8 +181,6 @@ const App = () => {
                             setCurrency={setResultCurrency}
                             currencyList={resultCurrencyList}
                             setCurrencyList={setResultCurrencyList}
-                            showCurrencyList={showCurrencyList}
-                            setShowCurrencyList={setShowCurrencyList}
                             type="result"
                         />
                         <SwapButton
@@ -206,7 +201,6 @@ const App = () => {
                         resultCurrency={resultCurrency}
                         fetchCurrencyData={fetchCurrencyData}
                     />
-
                     <SettingsButton
                         setShowSettingsModal={setShowSettingsModal}
                     />

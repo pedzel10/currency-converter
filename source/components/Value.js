@@ -14,8 +14,6 @@ const Value = ({
     setCurrency,
     setCurrencyList,
     currencyList,
-    showCurrencyList,
-    setShowCurrencyList,
     type,
 }) => {
     const format = useContext(SeparatorsContext).formatNumber
@@ -145,16 +143,6 @@ const Value = ({
     const resultInput = createRef()
 
     useEffect(() => {
-        console.log(showCurrencyList)
-
-        if (showCurrencyList)
-            currencyListElement.current.classList.add(
-                'value__currency-list--active'
-            )
-        if (showCurrencyList === false)
-            currencyListElement.current.classList.remove(
-                'value__currency-list--active'
-            )
         changeCurrencyList()
 
         // Formats value after changes in state
@@ -163,7 +151,7 @@ const Value = ({
             amount.toString().replace(/\./g, ','),
             thousands
         ).string
-    }, [amount, thousands, showCurrencyList])
+    }, [amount, thousands])
 
     return (
         <div className="main__value value">
