@@ -4,8 +4,9 @@
     bottom: 0;
     width: 100%;
     text-align: center;
-    color: rgba(255, 255, 0, 0.891);
+    color: $main;
     margin-bottom: 2%;
+    font-family: $font;
     .footer__gh-icon {
         margin-left: 1%;
         color: inherit;

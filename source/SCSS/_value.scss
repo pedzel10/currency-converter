@@ -4,34 +4,47 @@
     position: relative;
     .value__choose-currency-button {
         width: 25%;
-        border: 1px solid rgb(255, 255, 0);
+        border: $border-style;
         padding: 2%;
-        border-radius: 2px;
-        background-color: rgb(27, 27, 30);
-        font-size: 16px;
-        color: rgb(255, 255, 0);
+        border-radius: $border-rad;
+        background-color: $background;
+        font-size: 1.1rem;
+        color: $main;
+        font-family: $font;
+        outline: none;
+        cursor: pointer;
         .value__currency-symbol {
             // background-color: red;
             padding-right: 10px;
         }
+        .choose-currency-button__arrow {
+            font-size: 0.7em;
+            transform: translateY(-20%);
+        }
     }
     .value__currency-list {
         position: absolute;
-        background-color: rgb(27, 27, 30);
-        border: 1px solid rgb(255, 255, 0);
-        border-radius: 2px;
-        color: rgb(255, 255, 0);
+        background-color: $background;
+        border: $border-style;
+        border-radius: $border-rad;
+        color: $main;
         display: none;
         top: 100%;
         left: 0;
         z-index: 1;
+        font-family: $font;
         .currency-list__search {
-            background-color: rgb(27, 27, 30);
-            border-bottom: 1px solid rgb(255, 255, 0);
-            border-radius: 2px;
+            background-color: $background;
+            border-bottom: $border-style;
+            border-radius: $border-rad;
             padding: 5% 5px;
-            color: rgb(255, 255, 0);
+            color: $main;
             outline: none;
+            font-family: $font;
+            border-right: none;
+            border-left: none;
+            width: 100%;
+            font-size: 1.1rem;
         }
         .currency-list__ul {
             height: 200px;
@@ -40,8 +53,21 @@
             width: 100%;
             list-style: none;
         }
+        .currency-list__ul::-webkit-scrollbar {
+            width: 5px;
+        }
+        .currency-list__ul::-webkit-scrollbar-track {
+            background: $background;
+        }
+        .currency-list__ul::-webkit-scrollbar-thumb {
+            background: $main;
+            border-radius: 20px;
+        }
+        .currency-list__ul::-webkit-scrollbar-thumb:hover {
+            background: rgb(224, 224, 0);
+        }
         .all-label {
-            border-top: 1px solid rgb(255, 255, 0);
+            border-top: $border-style;
             margin: 5% 0 0 0;
         }
         .currency-list__element,
@@ -52,11 +78,12 @@
         .currency-list__element {
             display: flex;
             flex-direction: column;
+            cursor: pointer;
             .element__ticker {
-                font-size: 18px;
+                font-size: 1.1rem;
             }
             .element__name {
-                font-size: 10px;
+                font-size: 0.6rem;
             }
         }
     }
@@ -65,12 +92,16 @@
         display: block;
     }
     .value__input {
-        border: 1px solid rgb(255, 255, 0);
-        border-radius: 2px;
-        background-color: rgb(27, 27, 30);
+        border: $border-style;
+        border-radius: $border-rad;
+        background-color: $background;
         padding: 2%;
-        font-size: 18px;
+        font-size: 1.1rem;
         width: 73%;
-        color: rgb(255, 255, 0);
+        color: $main;
+        font-family: $font;
     }
+}
+.main__value:first-child {
+    margin-bottom: 12px;
 }

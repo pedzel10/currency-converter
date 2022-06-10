@@ -156,7 +156,7 @@ const App = () => {
                         formatNumber: separators.formatNumber,
                     }}
                 >
-                    <div className="result-container">
+                    <div className="main-container">
                         <CurrentPrice
                             inputCurrency={inputCurrency}
                             resultCurrency={resultCurrency}
@@ -164,56 +164,59 @@ const App = () => {
                             showCurrentPrice={showCurrentPrice}
                             setShowCurrentPrice={setShowCurrentPrice}
                         />
-                        <Value
-                            data={allCurrencies}
-                            amount={inputValue}
-                            currency={inputCurrency}
-                            setInputValue={setInputValue}
-                            setResultValue={setResultValue}
-                            setCurrency={setInputCurrency}
-                            currencyList={inputCurrencyList}
-                            setCurrencyList={setInputCurrencyList}
-                            setShowCurrentPrice={setShowCurrentPrice}
-                            type="input"
-                        />
-                        <Value
-                            data={allCurrencies}
-                            amount={resultValue}
-                            currency={resultCurrency}
-                            setInputValue={setInputValue}
-                            setResultValue={setResultValue}
-                            setCurrency={setResultCurrency}
-                            currencyList={resultCurrencyList}
-                            setCurrencyList={setResultCurrencyList}
-                            setShowCurrentPrice={setShowCurrentPrice}
-                            type="result"
-                        />
-                        <SwapButton
+                        <div className="result-container">
+                            <Value
+                                data={allCurrencies}
+                                amount={inputValue}
+                                currency={inputCurrency}
+                                setInputValue={setInputValue}
+                                setResultValue={setResultValue}
+                                setCurrency={setInputCurrency}
+                                currencyList={inputCurrencyList}
+                                setCurrencyList={setInputCurrencyList}
+                                setShowCurrentPrice={setShowCurrentPrice}
+                                type="input"
+                            />
+                            <Value
+                                data={allCurrencies}
+                                amount={resultValue}
+                                currency={resultCurrency}
+                                setInputValue={setInputValue}
+                                setResultValue={setResultValue}
+                                setCurrency={setResultCurrency}
+                                currencyList={resultCurrencyList}
+                                setCurrencyList={setResultCurrencyList}
+                                setShowCurrentPrice={setShowCurrentPrice}
+                                type="result"
+                            />
+                            <SwapButton
+                                inputValue={inputValue}
+                                setInputValue={setInputValue}
+                                inputCurrency={inputCurrency}
+                                setInputCurrency={setInputCurrency}
+                                resultValue={resultValue}
+                                setResultValue={setResultValue}
+                                resultCurrency={resultCurrency}
+                                setResultCurrency={setResultCurrency}
+                                setShowCurrentPrice={setShowCurrentPrice}
+                            />
+                        </div>
+                        <CalculateButton
                             inputValue={inputValue}
-                            setInputValue={setInputValue}
                             inputCurrency={inputCurrency}
-                            setInputCurrency={setInputCurrency}
                             resultValue={resultValue}
-                            setResultValue={setResultValue}
                             resultCurrency={resultCurrency}
-                            setResultCurrency={setResultCurrency}
+                            fetchCurrencyData={fetchCurrencyData}
+                            setShowCurrentPrice={setShowCurrentPrice}
+                        />
+                        <SettingsButton
+                            setShowSettingsModal={setShowSettingsModal}
+                        />
+                        <SettingsModal
+                            setSeparators={setSeparators}
+                            showSettingsModal={showSettingsModal}
                         />
                     </div>
-                    <CalculateButton
-                        inputValue={inputValue}
-                        inputCurrency={inputCurrency}
-                        resultValue={resultValue}
-                        resultCurrency={resultCurrency}
-                        fetchCurrencyData={fetchCurrencyData}
-                        setShowCurrentPrice={setShowCurrentPrice}
-                    />
-                    <SettingsButton
-                        setShowSettingsModal={setShowSettingsModal}
-                    />
-                    <SettingsModal
-                        setSeparators={setSeparators}
-                        showSettingsModal={showSettingsModal}
-                    />
                 </SeparatorsContext.Provider>
                 <Footer />
             </main>

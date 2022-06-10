@@ -13,6 +13,7 @@ const SwapButton = ({
     resultValue,
     resultCurrency,
     setResultCurrency,
+    setShowCurrentPrice,
 }) => {
     // Swaps currencies and values
     // e.g. 1 PLN = 4,26 USD  ->  4,26 USD = 0,00 PLN
@@ -29,12 +30,19 @@ const SwapButton = ({
             setInputCurrency(resultCurrency)
             setResultCurrency(inputCurrency)
         }
+        setShowCurrentPrice(false)
     }
 
     return (
-        <button onClick={swapCurrencies} className="main__swap-button">
-            <FontAwesomeIcon icon={faArrowDownLong} />
-            <FontAwesomeIcon icon={faArrowUpLong} />
+        <button
+            onClick={swapCurrencies}
+            className="main__swap-button swap-button"
+        >
+            <FontAwesomeIcon
+                className="swap-button__down"
+                icon={faArrowDownLong}
+            />
+            <FontAwesomeIcon className="swap-button__up" icon={faArrowUpLong} />
         </button>
     )
 }

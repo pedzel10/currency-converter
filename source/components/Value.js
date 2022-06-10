@@ -164,7 +164,10 @@ const Value = ({
                 className="value__choose-currency-button"
             >
                 <span className="value__currency-symbol">{currency}</span>
-                <FontAwesomeIcon icon={faAngleDown} />
+                <FontAwesomeIcon
+                    className="choose-currency-button__arrow"
+                    icon={faAngleDown}
+                />
             </button>
             <div
                 className="value__currency-list currency-list"

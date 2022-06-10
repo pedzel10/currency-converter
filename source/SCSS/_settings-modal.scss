@@ -1,40 +1,49 @@
 .main__settings-modal {
-    display: none;
+    display: flex;
     flex-direction: column;
     justify-content: space-around;
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translateY(-50%);
-    transform: translateX(-50%);
+    transform: translate(-50%, -150%);
 
-    background-color: rgb(27, 27, 30);
-    border: 1px solid rgb(255, 255, 0);
-    border-radius: 2px;
-    color: rgb(255, 255, 0);
-    width: 70%;
+    font-family: $font;
+
+    background-color: $background;
+    border: $border-style;
+    border-radius: $border-rad;
+    color: $main;
+    width: 90%;
     padding: 5% 8%;
     height: 15%;
-    font-size: 18px;
+    font-size: 1.1rem;
+    box-shadow: 0px 0px 100px 100px $background;
+
+    opacity: 0;
+    transition: 0.5s cubic-bezier(0.71, -0.55, 0.3, 1.61);
     .container {
         display: flex;
         justify-content: space-between;
         align-items: space-around;
         .modal__separators .separators__button {
             margin-left: 5px;
-            width: 15px;
-            background-color: rgb(27, 27, 30);
-            border: 1px solid rgb(255, 255, 0);
-            border-radius: 2px;
-            color: rgb(255, 255, 0);
+            width: 20px;
+            background-color: $background;
+            border: 1px solid $main;
+            border-radius: $border-rad;
+            color: $main;
             font-weight: bold;
+            cursor: pointer;
+            font-size: 1em;
         }
         .separators__button.separators__button--active {
-            color: rgb(27, 27, 30);
-            background-color: rgb(255, 255, 0);
+            color: $background;
+            background-color: $main;
         }
     }
 }
 .main__settings-modal--active {
+    transform: translate(-50%, -50%);
+    opacity: 1;
     display: flex;
 }

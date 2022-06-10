@@ -3,26 +3,95 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: rgb(27, 27, 30);
+    background-color: $background;
     width: 100%;
     height: 100vh;
-
-    .result-container {
+    .main-container {
+        width: 83%;
         position: relative;
-        width: 80%;
-        height: 12%;
-        // background-color: #ddd;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        .main__swap-button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            right: -8%;
-            border: none;
-            background-color: transparent;
-            color: rgb(255, 255, 0);
+        justify-content: center;
+        height: 100%;
+        .result-container {
+            position: relative;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            .main__swap-button {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                left: 100%;
+                width: 10%;
+                border: none;
+                background-color: transparent;
+                color: $main;
+                font-size: 1em;
+                cursor: pointer;
+                .swap-button__down,
+                .swap-button__up {
+                    transition: 0.3s cubic-bezier(0.71, -0.55, 0.3, 1.61);
+                }
+            }
+
+            .main__swap-button:hover {
+                .swap-button__down {
+                    transform: translateY(20%);
+                }
+                .swap-button__up {
+                    transform: translateY(-20%);
+                }
+            }
+        }
+    }
+}
+@media (orientation: portrait) and (min-width: 760px) {
+    html {
+        font-size: 20px;
+    }
+    .main {
+        .main-container {
+            width: 50%;
+        }
+    }
+}
+@media (orientation: portrait) and (min-width: 900px) {
+    html {
+        font-size: 25px;
+    }
+    .main {
+        .main-container {
+            width: 50%;
+        }
+    }
+}
+
+@media (orientation: landscape) {
+    .main {
+        .main-container {
+            width: 50%;
+        }
+    }
+}
+
+@media (orientation: landscape) and (min-width: 1000px) {
+    .main {
+        .main-container {
+            width: 30%;
+        }
+    }
+}
+
+@media (orientation: landscape) and (min-width: 1300px) {
+    html {
+        font-size: 20px;
+    }
+    .main {
+        .main-container {
+            width: 25%;
         }
     }
 }
