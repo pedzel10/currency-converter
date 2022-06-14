@@ -1,7 +1,15 @@
-import React, { StrictMode, createContext, useEffect, useState } from 'react'
+import React, {
+    StrictMode,
+    createContext,
+    useCallback,
+    useEffect,
+    useState,
+} from 'react'
 import ReactDOM from 'react-dom/client'
 
 import API_KEYS from './api-keys'
+
+import './source/SCSS/style.scss'
 
 import CurrentPrice from './source/components/CurrentPrice'
 import Value from './source/components/Value'
@@ -144,7 +152,7 @@ const App = () => {
         })
     }, [])
 
-    if (!allCurrencies) return <div>Loading...</div>
+    if (!allCurrencies) return <div className="loading">Loading...</div>
 
     return (
         <StrictMode>
