@@ -1,4 +1,4 @@
-import React, { createRef, useContext, useEffect } from 'react'
+import React, { useContext, useRef } from 'react'
 
 import { SeparatorsContext } from '/index.js'
 
@@ -12,18 +12,17 @@ const CurrentPrice = ({
     const { thousands, formatNumber } = useContext(SeparatorsContext)
     let price2 = 1 / price
 
-    const priceRate = createRef()
-
-    useEffect(() => {
-        if (showCurrentPrice)
-            priceRate.current.classList.add('main__current-price--active')
-        if (showCurrentPrice === false)
-            priceRate.current.classList.remove('main__current-price--active')
-        // setShowCurrentPrice(false)
-    }, [inputCurrency, resultCurrency, showCurrentPrice])
+    const priceRate = useRef()
 
     return (
-        <div className="main__current-price" ref={priceRate}>
+        <div
+            className={
+                showCurrentPrice
+                    ? 'main__current-price main__current-price--active'
+                    : 'main__current-price'
+            }
+            ref={priceRate}
+        >
             <p>
                 1 {inputCurrency} ={' '}
                 {

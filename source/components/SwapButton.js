@@ -18,6 +18,8 @@ const SwapButton = ({
     // Swaps currencies and values
     // e.g. 1 PLN = 4,26 USD  ->  4,26 USD = 0,00 PLN
     // sets second value to 0,00 because 4,26 USD = 1 PLN is not true, user has the opportunity to recalculate result
+
+    //useMemo ?
     const swapCurrencies = () => {
         if (inputValue > 0 && resultValue > 0) {
             setInputValue(resultValue)

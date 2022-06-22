@@ -42,7 +42,7 @@ const App = () => {
     const [showSettingsModal, setShowSettingsModal] = useState(false)
     const [showCurrentPrice, setShowCurrentPrice] = useState(false)
 
-    // Price rate  e.g. 1 USD = 4,26 PLN
+    // Price rate  e.g. 1 USD = 4,45 PLN
     const [price, setPrice] = useState(1)
 
     const formatNumber = (number, thousands) => {
@@ -67,6 +67,24 @@ const App = () => {
             string: resultString,
             int: parseFloat(resultInt),
         }
+    }
+
+    const calculateResult = () => {
+        console.log(inputValue)
+
+        let from, to, amount
+        if (inputValue > 0) {
+            from = inputCurrency
+            to = resultCurrency
+            amount = inputValue
+        } else if (resultValue > 0) {
+            from = resultCurrency
+            to = inputCurrency
+            amount = resultValue
+        }
+
+        fetchCurrencyData('convert', from, to, amount)
+        setShowCurrentPrice(true)
     }
 
     const showResult = result => {
@@ -209,20 +227,14 @@ const App = () => {
                                 setShowCurrentPrice={setShowCurrentPrice}
                             />
                         </div>
-                        <CalculateButton
-                            inputValue={inputValue}
-                            inputCurrency={inputCurrency}
-                            resultValue={resultValue}
-                            resultCurrency={resultCurrency}
-                            fetchCurrencyData={fetchCurrencyData}
-                            setShowCurrentPrice={setShowCurrentPrice}
-                        />
+                        <CalculateButton calculateResult={calculateResult} />
                         <SettingsButton
                             setShowSettingsModal={setShowSettingsModal}
                         />
                         <SettingsModal
                             setSeparators={setSeparators}
                             showSettingsModal={showSettingsModal}
+                            separators={separators}
                         />
                     </div>
                 </SeparatorsContext.Provider>
